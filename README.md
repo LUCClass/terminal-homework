@@ -18,18 +18,39 @@ Whatever language you decide to use, your program should do the following things
 
 ## Printing Characters
 
-See the [OSDev](https://wiki.osdev.org/Printing_To_Screen) page for help on how to do this. Basically, all you have to do is write ASCII values to video memory. There's a demo program in C on the OSDev page that prints a string to the upper left corner of the screen. That would be a good place to start.
+See the [OSDev](https://wiki.osdev.org/Printing_To_Screen) page for help on how to do this. Basically, all you have to do is write ASCII values to video memory, which starts at address `0xB8000`. There's a demo program in C on the OSDev page that prints a string to the upper left corner of the screen. That would be a good place to start.
 
 
 ## Coding in C
 
 If you want to write your project in C, you need to do the following steps to make it compile:
 
-1. Create a new C file in the `src` directory. Put an empty function in it called `main`:
+1. Create a new C file called `term.c` in the `src` directory. Put an empty function in it called `main`:
 
-    int main() {
-        for(;;);  // Loop forever
-    }
+     int main() {
+         for(;;);  // Loop forever
+     }
+
+2. Add your new C source file to the Makefile. On line 10 of the Makefile there is a list of source files to compile. Right now, there's only one file in the list: terminaldemo.o. You need to add your new C file to the list of objects to compile. Make a new line after terminaldemo.o:
+
+     OBJS = \
+         terminaldemo.o \
+         term.o \
+
+**Makefiles are picky** about indentation. Don't use spaces to indent in a Makefile, use tabs.
+
+3. In `terminaldemo.s`, put `extern main` right above the `_start` function:
+
+     section .text
+
+     global _start
+     extern main   ; DECLARE MAIN
+     _start:
+        call main  ; CALL MAIN
+
+This tells the assembler that there is a function called `main` in a different source file. If you don't put that line in, you'll get error when you try to compile.
+
+3. Call your `main` function from `terminaldemo.s`. You probably want to make the call the first instruction in the program.
 
 ## Searching Google
 
