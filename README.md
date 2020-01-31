@@ -27,30 +27,30 @@ If you want to write your project in C, you need to do the following steps to ma
 
 1. Create a new C file called `term.c` in the `src` directory. Put an empty function in it called `main`:
 
-     int main() {
-         for(;;);  // Loop forever
-     }
+        int main() {
+            for(;;);  // Loop forever
+        }
 
 2. Add your new C source file to the Makefile. On line 10 of the Makefile there is a list of source files to compile. Right now, there's only one file in the list: terminaldemo.o. You need to add your new C file to the list of objects to compile. Make a new line after terminaldemo.o:
 
-     OBJS = \
-         terminaldemo.o \
-         term.o \
+        OBJS = \
+            terminaldemo.o \
+            term.o \
 
 **Makefiles are picky** about indentation. Don't use spaces to indent in a Makefile, use tabs.
 
 3. In `terminaldemo.s`, put `extern main` right above the `_start` function:
 
-     section .text
+        section .text
 
-     global _start
-     extern main   ; DECLARE MAIN
-     _start:
-        call main  ; CALL MAIN
+        global _start
+        extern main   ; DECLARE MAIN
+        _start:
+            call main  ; CALL MAIN
 
 This tells the assembler that there is a function called `main` in a different source file. If you don't put that line in, you'll get error when you try to compile.
 
-3. Call your `main` function from `terminaldemo.s`. You probably want to make the call the first instruction in the program.
+4. Call your `main` function from `terminaldemo.s`. You probably want to make the call the first instruction in the program.
 
 ## Searching Google
 
