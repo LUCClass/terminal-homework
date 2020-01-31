@@ -6,15 +6,16 @@ This repo contains a skeleton for your project with a demo program in assembly t
 
 Whatever language you decide to use, your program should do the following things:
 
-1. `puts` prints a NULL-terminated string to the terminal.
-  * Calling `puts` sequentially will print strings one after another. In other words, `puts` should not overwrite text that was previously written to the screen.
-  * Printing a '\n' character should advance to the next line on the screen.
-  * When the cursor gets to the bottom of the screen, advancing to a new line should scroll the existing text on the screen up one line.
+1. A `main` or `_start` function that calls all of your other functions to demonstrate them.
+2. A function `puts` that prints a NULL-terminated string to the terminal.
+    * Calling `puts` sequentially will print strings one after another. In other words, `puts` should not overwrite text that was previously written to the screen.
+    * Printing a '\n' character should advance to the next line on the screen.
+    * When the cursor gets to the bottom of the screen, advancing to a new line should scroll the existing text on the screen up one line.
 
 **For extra credit:**
 
-2. Interrupt handler for the keyboard that (a) reads the key's scancode, (b) translates the scancode to an ASCII character, and (c) puts the ASCII character into an input buffer.
-3. `getc` reads a character from the keyboard input buffer.
+3. Interrupt handler for the keyboard that (a) reads the key's scancode, (b) translates the scancode to an ASCII character, and (c) puts the ASCII character into an input buffer.
+4. `getc` reads a character from the keyboard input buffer.
 
 ## Printing Characters
 
@@ -31,7 +32,7 @@ If you want to write your project in C, you need to do the following steps to ma
             for(;;);  // Loop forever
         }
 
-2. Add your new C source file to the Makefile. On line 10 of the Makefile there is a list of source files to compile. Right now, there's only one file in the list: terminaldemo.o. You need to add your new C file to the list of objects to compile. Make a new line after terminaldemo.o:
+2. Add your new C source file to the Makefile. On line 10 of the Makefile there is a list of source files to compile. Right now, there's only one file in the list: `terminaldemo.o`. You need to add your new C file to the list of objects to compile. Make a new line after `terminaldemo.o`:
 
         OBJS = \
             terminaldemo.o \
@@ -46,7 +47,7 @@ If you want to write your project in C, you need to do the following steps to ma
         global _start
         extern main   ; DECLARE MAIN
         _start:
-            call main  ; CALL MAIN
+            call main ; CALL MAIN
 
 This tells the assembler that there is a function called `main` in a different source file. If you don't put that line in, you'll get error when you try to compile.
 
